@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Rural de Animales</title>
+    <link rel="stylesheet" href="style.css?v=20260408-pages">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js?v=20260408-pages" defer></script>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div class="hero__content">
+                <p class="eyebrow">Panel rural de control</p>
+                <h1>Gestion profesional de animales, produccion y rentabilidad</h1>
+                <p class="hero__lead">
+                    Calcula la produccion diaria, visualiza ingresos con mas claridad y consulta un glosario ordenado
+                    con definiciones completas para trabajo rural.
+                </p>
+                <div class="hero__stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">9</span>
+                        <span class="hero-stat__label">animales incluidos</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">40+</span>
+                        <span class="hero-stat__label">conceptos ganaderos</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">1</span>
+                        <span class="hero-stat__label">flujo claro de trabajo</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="workspace-grid">
+            <section id="seleccion-animal" class="panel panel--selector">
+                <div class="panel__heading">
+                    <p class="eyebrow">Paso 1</p>
+                    <h2>Seleccione el animal</h2>
+                    <p>Elija la especie y prepare la calculadora con la unidad correcta.</p>
+                </div>
+
+                <form id="formAnimal" class="stack-form">
+                    <label for="animal">Animal</label>
+                    <select id="animal" required>
+                        <option value="">Seleccione una opcion</option>
+                    </select>
+                    <button type="submit" class="button button--primary">Aplicar seleccion</button>
+                    <p class="selection-note">La seleccion se aplica al instante y limpia el calculo anterior cuando cambia de animal para no mezclar unidades.</p>
+                </form>
+
+                <div id="animalSeleccionado" class="animal-highlight animal-highlight--empty" aria-live="polite">
+                    Seleccione un animal para ver su enfoque productivo, su unidad de calculo y sus puntos clave.
+                </div>
+            </section>
+
+            <section id="calculos" class="panel panel--calculator">
+                <div class="panel__heading">
+                    <p class="eyebrow">Paso 2</p>
+                    <h2>Calculadora ganadera</h2>
+                    <p>Ingrese la informacion base y obtenga una lectura mas util del rendimiento diario.</p>
+                </div>
+
+                <div id="animalFormContext" class="animal-form-context animal-form-context--empty">
+                    La calculadora adaptara sus campos cuando seleccione un animal.
+                </div>
+
+                <form id="formGanadero" class="stack-form">
+                    <div class="field-grid">
+                        <div class="field-group">
+                            <label id="labelCantidad" for="numAnimales">Numero de animales</label>
+                            <input type="number" id="numAnimales" min="1" step="1" required>
+                            <p id="hintCantidad" class="field-hint">Ingrese la cantidad total del lote que desea evaluar.</p>
+                        </div>
+
+                        <div class="field-group">
+                            <label id="labelProduccion" for="produccionPorAnimal">Produccion por animal</label>
+                            <input type="number" id="produccionPorAnimal" min="0" step="0.01" required>
+                            <p id="hintProduccion" class="field-hint">La produccion se ajustara segun el animal seleccionado.</p>
+                        </div>
+
+                        <div class="field-group">
+                            <label id="labelPrecio" for="precioPorUnidad">Precio por unidad</label>
+                            <input type="number" id="precioPorUnidad" min="0" step="0.01" required>
+                            <p id="hintPrecio" class="field-hint">Ingrese el valor comercial de cada unidad producida.</p>
+                        </div>
+
+                        <div class="field-group">
+                            <label id="labelGastos" for="gastosDiarios">Gastos diarios</label>
+                            <input type="number" id="gastosDiarios" min="0" step="0.01" required>
+                            <p id="hintGastos" class="field-hint">Incluya alimentacion, manejo y costos directos del dia.</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="button button--primary">Calcular resultados</button>
+                </form>
+            </section>
+
+            <section class="panel panel--results">
+                <div class="panel__heading">
+                    <p class="eyebrow">Paso 3</p>
+                    <h2>Resultados y lectura visual</h2>
+                    <p>Revise produccion, ingresos, ganancia y rendimiento en un solo bloque ordenado.</p>
+                </div>
+
+                <div id="resultados" class="result-state" aria-live="polite">
+                    Ejecute un calculo para mostrar el resumen economico y productivo del animal seleccionado.
+                </div>
+
+                <div id="chartShell" class="chart-shell chart-shell--empty">
+                    <div id="chartPlaceholder" class="chart-placeholder" aria-hidden="true"></div>
+                    <canvas id="graficaResultados"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <section class="glossary-launch">
+            <p class="eyebrow">Consulta tecnica</p>
+            <h2>Acceda al glosario completo</h2>
+            <p>
+                El boton se diseno con una jerarquia alta para que el glosario tenga un acceso directo, visible y central.
+            </p>
+            <button type="button" id="glossaryToggle" class="glossary-cta" aria-expanded="false" aria-controls="glosario">
+                GLOSARIO
+            </button>
+            <p class="glossary-launch__caption">Presione el boton para desplegar el glosario ganadero completo.</p>
+        </section>
+
+        <section id="glosario" class="panel panel--glossary is-collapsed" hidden>
+            <div class="panel__heading panel__heading--wide">
+                <p class="eyebrow">Glosario ganadero</p>
+                <h2>Glosario completo de ganaderia, produccion, manejo, sanidad, instalaciones y economia</h2>
+                <p>
+                    Consulte un glosario organizado por bloques tecnicos. Puede buscar, filtrar y revisar conceptos
+                    clave de animales, nutricion, reproduccion, manejo, sanidad, instalaciones y economia ganadera.
+                </p>
+            </div>
+
+            <div id="glossaryOverview" class="glossary-overview"></div>
+
+            <div class="glossary-toolbar">
+                <label class="search-field" for="glossarySearch">
+                    <span>Buscar termino o animal</span>
+                    <input type="search" id="glossarySearch" placeholder="Ejemplo: vaca, ensilaje, bioseguridad, punto de equilibrio">
+                </label>
+
+                <div class="filter-group" aria-label="Filtros del glosario">
+                    <button type="button" class="filter-chip is-active" data-filter="todos">Todos</button>
+                    <button type="button" class="filter-chip" data-filter="animales">Animales</button>
+                    <button type="button" class="filter-chip" data-filter="nutricion">Nutricion</button>
+                    <button type="button" class="filter-chip" data-filter="manejo">Manejo</button>
+                    <button type="button" class="filter-chip" data-filter="sanidad">Sanidad</button>
+                    <button type="button" class="filter-chip" data-filter="reproduccion">Reproduccion</button>
+                    <button type="button" class="filter-chip" data-filter="instalaciones">Instalaciones</button>
+                    <button type="button" class="filter-chip" data-filter="economia">Economia</button>
+                </div>
+            </div>
+
+            <div id="glossarySummary" class="glossary-summary" aria-live="polite"></div>
+            <div id="glossaryGrid" class="glossary-grid"></div>
+        </section>
+    </div>
+</body>
+</html>
